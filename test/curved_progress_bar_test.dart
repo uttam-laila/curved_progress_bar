@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
+// import 'package:flutter_test/flutter_test.dart';
 
-import 'package:curved_progress_bar/curved_progress_bar.dart';
+/* import 'package:curved_progress_bar/curved_progress_bar.dart';
 
 void main() {
   test('adds one to input values', () {
@@ -10,3 +10,4 @@ void main() {
     expect(calculator.addOne(0), 1);
   });
 }
+ */
