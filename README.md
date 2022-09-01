@@ -19,8 +19,10 @@ Progressbar that has curved edge and can add animation time duration to build th
 
 ## Getting started
 
+```dart
 dependencies:
   curved_progress_bar: ^1.0.0
+```
 
 ## Usage
 
