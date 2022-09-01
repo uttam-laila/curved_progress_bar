@@ -15,7 +15,7 @@ Progressbar that has curved edge and can add animation time duration to build th
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Progressbar that has curved edge and can add animation time duration to build the progressbar.
 
 ## Getting started
 
