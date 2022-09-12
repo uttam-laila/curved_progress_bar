@@ -1,16 +1,3 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
 Progressbar that has curved edge and can add animation time duration to build the progressbar.
 
 ## Features
@@ -21,7 +8,7 @@ Progressbar that has curved edge and can add animation time duration to build th
 
 ```dart
 dependencies:
-  curved_progress_bar: ^1.0.0
+  curved_progress_bar: ^1.0.2
 ```
 
 ## Usage
@@ -30,11 +17,28 @@ dependencies:
 ```dart
   CurvedCircularProgressIndicator(
     value: 0.5,
-    strokeWidth: 12.sp,
+    strokeWidth: 12,
     animationDuration: const Duration(seconds: 1),
     backgroundColor: Color(0xFFFFFFCD),
     color: Colors.blue,
   ),
+```
+
+```dart
+  const CurvedCircularProgressIndicator(),
+```
+
+```dart
+  CurvedLinearProgressIndicator(
+    value: 0.5,
+    strokeWidth: 8,
+    backgroundColor: Colors.amber,
+    color: Colors.red,
+  ),
+```
+
+```dart
+  const CurvedLinearProgressIndicator(),
 ```
 
 ## Additional information

@@ -187,38 +187,15 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;
-    canvas.drawRect(Offset.zero & size, paint);
 
     canvas.drawLine(
       Offset(size.width, 0),
-      const Offset(2, 0),
+      Offset.zero,
       paint,
     );
 
     paint.color = valueColor;
 
-    /* oid drawBar(double x, double width) {
-      if (width <= 0.0) {
-        return;
-      }
-
-      final double left;
-      switch (textDirection) {
-        case TextDirection.rtl:
-          left = size.width - width - x;
-          break;
-        case TextDirection.ltr:
-          left = x;
-          break;
-      }
-      // canvas.drawRect(Offset(left, 0.0) & Size(width, size.height), paint);
-
-      canvas.drawLine(
-        Offset(left * size.width, 0),
-        Offset(size.height * left, 0),
-        paint,
-      );
-    } */
     void drawBar(double x, double width) {
       if (width <= 0.0) {
         return;
@@ -242,9 +219,10 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
           paint,
         );
       }
+
       canvas.drawLine(
+        Offset(left + width, 0),
         Offset(left, 0),
-        Offset(left * left, 0),
         paint,
       );
     }
