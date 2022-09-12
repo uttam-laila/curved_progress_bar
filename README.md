@@ -8,6 +8,11 @@ Progressbar that has curved edge and can add animation time duration to build th
 ## Getting started
 
 
+
+https://user-images.githubusercontent.com/56428324/189646978-ba944285-a8e0-42c9-aeaa-c9db833c85fa.mp4
+
+
+
 ```dart
 dependencies:
   curved_progress_bar: ^1.0.2
