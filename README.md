@@ -16,9 +16,6 @@ dependencies:
 ## Usage
 
 
-Uploading screen-20220912-165928~2.mp4…
-
-
 ```dart
   CurvedCircularProgressIndicator(
     value: 0.5,
@@ -50,3 +47,17 @@ Uploading screen-20220912-165928~2.mp4…
 
 
 https://github.com/uttam-laila/curved_progress_bar/blob/master/example/lib/main.dart
+
+
+## Author
+
+
+Uttam Laila, Flutter Developer since 2019.
+<table>
+<tr >
+<td><a href="https://stackoverflow.com/users/10834232/l-uttama">stackoverflow</a></td><td></td><td></td><td></td><td></td><td></td>
+<td><a href="https://github.com/uttam-laila">github</a></td>
+</tr><tr>
+<td>
+<a href="https://twitter.com/laila_uttam">twitter</a></td><td></td><td></td><td></td><td></td><td></td>
+<td><a href="https://www.linkedin.com/in/uttamlaila/">linkedin</a></td></tr></table>
