@@ -2,9 +2,11 @@ Progressbar that has curved edge and can add animation time duration to build th
 
 ## Features
 
+
 Progressbar that has curved edge and can add animation time duration to build the progressbar.
 
 ## Getting started
+
 
 ```dart
 dependencies:
