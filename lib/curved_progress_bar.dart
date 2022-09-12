@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const double _kMinCurvedCircularProgressIndicatorSize = 36.0;
 const int _kIndeterminateLinearDuration = 1800;
@@ -44,6 +43,7 @@ abstract class ProgressIndicator extends StatefulWidget {
     this.valueColor,
     this.semanticsLabel,
     this.semanticsValue,
+    this.strokeWidth = 4.0,
     this.animationDuration,
   }) : super(key: key);
 
@@ -107,6 +107,9 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// {@endtemplate}
   final String? semanticsValue;
 
+  ///Stroke width
+  final double? strokeWidth;
+
   Color _getValueColor(BuildContext context) {
     return valueColor?.value ??
         color ??
@@ -142,6 +145,7 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
     required this.backgroundColor,
     required this.valueColor,
     this.value,
+    required this.strokeWidth,
     required this.animationValue,
     required this.textDirection,
   });
@@ -149,6 +153,7 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
   final Color backgroundColor;
   final Color valueColor;
   final double? value;
+  final double strokeWidth;
   final double animationValue;
   final TextDirection textDirection;
 
@@ -179,36 +184,25 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..color = backgroundColor
+      ..strokeWidth = strokeWidth
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;
-    // canvas.drawRect(Offset.zero & size, paint);
-
-    paint.strokeWidth = 8;
+    canvas.drawRect(Offset.zero & size, paint);
 
     canvas.drawLine(
       Offset(size.width, 0),
-      Offset(2.sp, 0),
+      const Offset(2, 0),
       paint,
     );
 
-    // canvas.drawCircle(Offset(0.4, 0.61), 40, paint);
-    /*  canvas.drawPath(
-      Path()
-        ..addRect(Rect.fromPoints(
-            Offset(0, 0), Offset(size.width + 15, size.height + 15))),
-      Paint()
-        ..color = tertiaryColor
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, (12 * 0.57735 + 0.5)),
-    ); */
-
     paint.color = valueColor;
 
-    void drawBar(double x, double width) {
+    /* oid drawBar(double x, double width) {
       if (width <= 0.0) {
         return;
       }
 
-      /*    final double left;
+      final double left;
       switch (textDirection) {
         case TextDirection.rtl:
           left = size.width - width - x;
@@ -216,12 +210,41 @@ class _CurvedLinearProgressIndicatorPainter extends CustomPainter {
         case TextDirection.ltr:
           left = x;
           break;
-      } */
+      }
       // canvas.drawRect(Offset(left, 0.0) & Size(width, size.height), paint);
 
       canvas.drawLine(
-        Offset(2, 0.sp),
-        Offset(width, 0),
+        Offset(left * size.width, 0),
+        Offset(size.height * left, 0),
+        paint,
+      );
+    } */
+    void drawBar(double x, double width) {
+      if (width <= 0.0) {
+        return;
+      }
+
+      final double left;
+      switch (textDirection) {
+        case TextDirection.rtl:
+          left = size.width - width - x;
+          break;
+        case TextDirection.ltr:
+          left = x;
+          break;
+      }
+      paint.strokeCap = StrokeCap.round;
+      paint.strokeWidth = strokeWidth;
+      if (value != null) {
+        canvas.drawLine(
+          const Offset(2, 0),
+          Offset(width, 0),
+          paint,
+        );
+      }
+      canvas.drawLine(
+        Offset(left, 0),
+        Offset(left * left, 0),
         paint,
       );
     }
@@ -297,6 +320,7 @@ class CurvedLinearProgressIndicator extends ProgressIndicator {
     Color? color,
     Animation<Color?>? valueColor,
     this.minHeight,
+    double? strokeWidth,
     String? semanticsLabel,
     String? semanticsValue,
   })  : assert(minHeight == null || minHeight > 0),
@@ -308,6 +332,7 @@ class CurvedLinearProgressIndicator extends ProgressIndicator {
           valueColor: valueColor,
           semanticsLabel: semanticsLabel,
           semanticsValue: semanticsValue,
+          strokeWidth: strokeWidth,
         );
 
   /// {@template flutter.material.CurvedLinearProgressIndicator.trackColor}
@@ -379,8 +404,10 @@ class _CurvedLinearProgressIndicatorState
     final Color trackColor = widget.backgroundColor ??
         indicatorTheme.linearTrackColor ??
         Theme.of(context).colorScheme.background;
-    final double minHeight =
-        widget.minHeight ?? indicatorTheme.linearMinHeight ?? 4.0;
+    final double minHeight = widget.minHeight ??
+        widget.strokeWidth ??
+        indicatorTheme.linearMinHeight ??
+        4.0;
 
     return widget._buildSemanticsWrapper(
       context: context,
@@ -396,6 +423,7 @@ class _CurvedLinearProgressIndicatorState
           painter: _CurvedLinearProgressIndicatorPainter(
             backgroundColor: trackColor,
             valueColor: widget._getValueColor(context),
+            strokeWidth: widget.strokeWidth ?? 4.0,
             value: widget.value, // may be null
             animationValue:
                 animationValue, // ignored if widget.value is not null
@@ -448,11 +476,12 @@ class _CurvedCircularProgressIndicatorPainter extends CustomPainter {
   final Color? backgroundColor;
   final Color valueColor;
   final double? value;
+  final double strokeWidth;
   final double headValue;
   final double tailValue;
   final double offsetValue;
   final double rotationValue;
-  final double strokeWidth;
+
   final double arcStart;
   final double arcSweep;
 
@@ -546,7 +575,7 @@ class CurvedCircularProgressIndicator extends ProgressIndicator {
     Color? backgroundColor,
     Color? color,
     Animation<Color?>? valueColor,
-    this.strokeWidth = 4.0,
+    double? strokeWidth,
     String? semanticsLabel,
     String? semanticsValue,
   })  : _indicatorType = _ActivityIndicatorType.material,
@@ -557,6 +586,7 @@ class CurvedCircularProgressIndicator extends ProgressIndicator {
           backgroundColor: backgroundColor,
           color: color,
           valueColor: valueColor,
+          strokeWidth: strokeWidth,
           semanticsLabel: semanticsLabel,
           semanticsValue: semanticsValue,
         );
@@ -574,7 +604,7 @@ class CurvedCircularProgressIndicator extends ProgressIndicator {
     double? value,
     Color? backgroundColor,
     Animation<Color?>? valueColor,
-    this.strokeWidth = 4.0,
+    double? strokeWidth,
     String? semanticsLabel,
     String? semanticsValue,
   })  : _indicatorType = _ActivityIndicatorType.adaptive,
@@ -585,6 +615,7 @@ class CurvedCircularProgressIndicator extends ProgressIndicator {
           valueColor: valueColor,
           semanticsLabel: semanticsLabel,
           semanticsValue: semanticsValue,
+          strokeWidth: strokeWidth,
         );
 
   final _ActivityIndicatorType _indicatorType;
@@ -600,7 +631,8 @@ class CurvedCircularProgressIndicator extends ProgressIndicator {
   Color? get backgroundColor => super.backgroundColor;
 
   /// The width of the line used to draw the circle.
-  final double strokeWidth;
+  @override
+  double? get strokeWidth;
 
   @override
   State<CurvedCircularProgressIndicator> createState() =>
@@ -695,7 +727,7 @@ class _CurvedCircularProgressIndicatorState
                     tailValue: tailValue,
                     offsetValue: offsetValue,
                     rotationValue: rotationValue,
-                    strokeWidth: widget.strokeWidth,
+                    strokeWidth: widget.strokeWidth ?? 4.0,
                   ),
                 ),
               ),
@@ -717,7 +749,7 @@ class _CurvedCircularProgressIndicatorState
                   tailValue: tailValue,
                   offsetValue: offsetValue,
                   rotationValue: rotationValue,
-                  strokeWidth: widget.strokeWidth,
+                  strokeWidth: widget.strokeWidth ?? 4.0,
                 ),
               ),
             ),
@@ -854,8 +886,8 @@ class RefreshProgressIndicator extends CurvedCircularProgressIndicator {
     Color? backgroundColor,
     Color? color,
     Animation<Color?>? valueColor,
-    double strokeWidth =
-        defaultStrokeWidth, // Different default than CurvedCircularProgressIndicator.
+    double?
+        strokeWidth, // Different default than CurvedCircularProgressIndicator.
     String? semanticsLabel,
     String? semanticsValue,
   }) : super(
@@ -864,13 +896,10 @@ class RefreshProgressIndicator extends CurvedCircularProgressIndicator {
           backgroundColor: backgroundColor,
           color: color,
           valueColor: valueColor,
-          strokeWidth: strokeWidth,
+          strokeWidth: strokeWidth ?? 4.0,
           semanticsLabel: semanticsLabel,
           semanticsValue: semanticsValue,
         );
-
-  /// Default stroke width.
-  static const double defaultStrokeWidth = 2.5;
 
   /// {@template flutter.material.RefreshProgressIndicator.backgroundColor}
   /// Background color of that fills the circle under the refresh indicator.
@@ -1006,7 +1035,7 @@ class _RefreshProgressIndicatorState
                     tailValue: tailValue,
                     offsetValue: offsetValue,
                     rotationValue: rotationValue,
-                    strokeWidth: widget.strokeWidth,
+                    strokeWidth: widget.strokeWidth ?? 4.0,
                     arrowheadScale: arrowheadScale,
                   ),
                 ),
