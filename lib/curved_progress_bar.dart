@@ -301,6 +301,7 @@ class CurvedLinearProgressIndicator extends ProgressIndicator {
     double? strokeWidth,
     String? semanticsLabel,
     String? semanticsValue,
+    Duration? animationDuration,
   })  : assert(minHeight == null || minHeight > 0),
         super(
           key: key,
@@ -311,6 +312,7 @@ class CurvedLinearProgressIndicator extends ProgressIndicator {
           semanticsLabel: semanticsLabel,
           semanticsValue: semanticsValue,
           strokeWidth: strokeWidth,
+          animationDuration: animationDuration,
         );
 
   /// {@template flutter.material.CurvedLinearProgressIndicator.trackColor}
@@ -347,11 +349,8 @@ class _CurvedLinearProgressIndicatorState
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(
-          milliseconds: (widget.animationDuration != null
-                  ? widget.animationDuration!.inMilliseconds * 1333
-                  : null) ??
-              _kIndeterminateLinearDuration),
+      duration: widget.animationDuration ??
+          const Duration(milliseconds: _kIndeterminateLinearDuration),
       vsync: this,
     );
     if (widget.value == null) {
