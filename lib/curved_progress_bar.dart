@@ -320,7 +320,7 @@ class CurvedLinearProgressIndicator extends ProgressIndicator {
   ///
   /// If [CurvedLinearProgressIndicator.backgroundColor] is null then the
   /// ambient [ProgressIndicatorThemeData.linearTrackColor] will be used.
-  /// If that is null, then the ambient theme's [ColorScheme.background]
+  /// If that is null, then the ambient theme's [ColorScheme.surface]
   /// will be used to draw the track.
   /// {@endtemplate}
   @override
@@ -380,7 +380,7 @@ class _CurvedLinearProgressIndicatorState
         ProgressIndicatorTheme.of(context);
     final Color trackColor = widget.backgroundColor ??
         indicatorTheme.linearTrackColor ??
-        Theme.of(context).colorScheme.background;
+        Theme.of(context).colorScheme.surface;
     final double minHeight = widget.minHeight ??
         widget.strokeWidth ??
         indicatorTheme.linearMinHeight ??

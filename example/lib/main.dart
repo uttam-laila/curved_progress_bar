@@ -1,5 +1,6 @@
-import 'package:curved_progress_bar/curved_progress_bar.dart';
 import 'package:flutter/material.dart';
+
+import 'package:curved_progress_bar/curved_progress_bar.dart';
 
 void main() {
   runApp(const DemoApp());
