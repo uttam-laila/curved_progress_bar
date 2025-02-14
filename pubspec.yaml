@@ -1,6 +1,6 @@
 name: curved_progress_bar
 description: Progressbar that has curved edge and can add animation duration to build the progressbar.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/uttam-laila/curved_progress_bar.git
 
 environment:
